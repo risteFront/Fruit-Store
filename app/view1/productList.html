@@ -1,0 +1,36 @@
+  <div class="panel panel-default row" ng-controller="productListCtrl">
+      <div class="col-xs-3">
+        <a ng-click="selectCategory()"
+        class="btn btn-default btn-block btn-lg">Home</a>
+        <a ng-repeat="item in data.products | orderBy:'category'| unique:'category'"
+        ng-click="selectCategory(item)"class="btn btn-default btn-block btn-lg"ng-class="getActiveClass(item)">
+        {{item}}
+        </a>
+      </div>
+      <div class="col-xs-8">
+        <div class="well" ng-repeat="item in data.products  | offset:currentPage*itemsPerPage | filter:categoryFilterFn | limitTo:itemsPerPage">
+          <h3>
+            <strong>{{item.name}}</strong>
+            <span class="pull-right label label-primary">
+              {{item.price | currency}}
+            </span>
+          </h3>
+          <span class="lead">{{item.description}}</span>
+          <button class="btn btn-success pull-right" ng-click="addToCart(item)">add to cart</button>
+
+        </div>
+      <div class="pagination">
+              <ul>
+                <li ng-class="prevPageDisabled()">
+                  <a href ng-click="prevPage()">« Prev</a>
+                </li>
+                <li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+                  <a href="#">{{n+1}}</a>
+                </li>
+                <li ng-class="nextPageDisabled()">
+                  <a href ng-click="nextPage()">Next »</a>
+                </li>
+              </ul>
+            </div>
+      </div>
+    </div>
